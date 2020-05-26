@@ -59,7 +59,22 @@ public class FXMLController {
 
     @FXML
     void btnSimula(ActionEvent event) {
-
+    	
+    	int num;
+    	this.txtResult.clear();
+    	
+    	try {
+    		
+    		num = Integer.parseInt(this.txtK.getText());
+    		if(num<1) {
+    			this.txtResult.appendText("Il valore inserito deve essere un numero intero maggiore di 0");
+    			return;
+    		}
+    		
+    	}catch(NumberFormatException e) {
+    		this.txtResult.appendText("Il valore inserito non è un numero intero!");
+    		return;
+    	}
     }
     
     @FXML

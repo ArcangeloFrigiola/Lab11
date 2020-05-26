@@ -15,6 +15,7 @@ public class TestRiversDAO {
 		River fiume = dao.getAllRivers().get(4);
 		List<Flow> list = new ArrayList<>(dao.getRilevazioniFiume(fiume));
 		double num = 0;
+		int gg = 24;
 		
 		for(Flow f: list) {
 			System.out.println(f.toString());
@@ -23,6 +24,9 @@ public class TestRiversDAO {
 		System.out.println("Numero di rilevamenti: "+list.size()+
 				"\nPortata media (SQL): "+dao.getAvgFlow(fiume)+
 				"\nPortata media (Java): "+num/list.size());
+		
+		System.out.println("\nPortata media per il fiume \""+dao.getAllRivers().get(4).getName()+
+				"\" nel giorno "+gg+": "+dao.getAvgFlowByDay(fiume, gg));
 		
 
 		

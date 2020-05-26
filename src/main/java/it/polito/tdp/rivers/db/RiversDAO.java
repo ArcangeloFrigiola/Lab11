@@ -91,4 +91,28 @@ public class RiversDAO {
 		}
 
 	}
+	
+	public double getAvgFlowByDay(River fiume, int giorno) {
+		final String sql ="SELECT AVG(flow) as avg " + 
+				"FROM flow " + 
+				"WHERE river = ? AND DAY(DAY)=?";
+		
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, fiume.getId());
+			st.setInt(2, giorno);
+			ResultSet res = st.executeQuery();
+
+			res.next();
+			double num = res.getDouble("avg");
+			conn.close();
+			return num;
+			
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+
+	}
 }
