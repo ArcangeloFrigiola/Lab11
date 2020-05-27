@@ -20,6 +20,7 @@ public class Simulator {
 	private RiversDAO dao;
 	private PriorityQueue<Event> queue;
 	private Map<Integer, Double> mappaFlussoMedioByDay= new HashMap<>();
+	private List<Flow> listaRilevamenti = new ArrayList<>();
 	
 	//PARAMETRI DA CALCOLARE
 	private int giorniNotErogMinima;
@@ -31,6 +32,7 @@ public class Simulator {
 		this.dao = new RiversDAO();
 		this.queue = new PriorityQueue<>();
 		this.mappaFlussoMedioByDay = dao.getAvgFlowByDay(fiume);
+		this.listaRilevamenti = dao.getRilevazioniFiume(fiume);
 		
 		this.giorniNotErogMinima=0;
 		this.capacitaMedia=0.0;
@@ -40,7 +42,7 @@ public class Simulator {
 		this.flussoOutMin = 0.8*this.flussoMedio*(3600*24); // Flusso minimo in uscita da garantire al giorno
 		
 		
-		LocalDate giorno = LocalDate.of(2000, 1, 1); // Giorno di inizio simulazione forfettario
+		/*LocalDate giorno = LocalDate.of(2000, 1, 1); // Giorno di inizio simulazione forfettario
 		int countGiorni = 1;
 		
 		while(countGiorni<366){
@@ -50,6 +52,13 @@ public class Simulator {
 			countGiorni++;
 			giorno = giorno.plusDays(1);
 			//System.out.println(nuovo.toString());
+		}*/
+		
+		int count = 0;
+		while(count<this.listaRilevamenti.size()) {
+			Event nuovo = new Event(EventType.INGRESSO_FLUSSO, this.listaRilevamenti.get(count).getFlow()*3600*24, count);
+			queue.add(nuovo);
+			count++;
 		}
 		System.out.println("Flusso medio del corso d'acqua: "+this.flussoMedio+" m^3/s\n");
 		System.out.println("Fattore di scala: "+K+"\n");
