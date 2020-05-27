@@ -27,7 +27,7 @@ public class Model {
 		
 		Simulator sim = new Simulator();
 		sim.run(river, k, getAvgFlow(river));
-		String stat = "Capacità media del bacino: "+sim.getCapacitaMedia()+
+		String stat = "Capacità media del bacino: "+Math.ceil(sim.getCapacitaMedia())+" m^3"+
 			"\nGiorni in cui non è stato possibile erogare la quantità minima di flusso: "+sim.getGiorniNotErogazioneMin()+"\n";
 		return stat;
 	}

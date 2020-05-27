@@ -1,7 +1,9 @@
 package it.polito.tdp.rivers.db;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import it.polito.tdp.rivers.model.Flow;
 import it.polito.tdp.rivers.model.River;
@@ -11,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 public class RiversDAO {
 
@@ -92,22 +94,23 @@ public class RiversDAO {
 
 	}
 	
-	public double getAvgFlowByDay(River fiume, int giorno) {
-		final String sql ="SELECT AVG(flow) as avg " + 
-				"FROM flow " + 
-				"WHERE river = ? AND DAY(DAY)=?";
-		
+	public Map<Integer, Double> getAvgFlowByDay(River fiume) {
+		final String sql ="SELECT AVG(f1.flow) AS avg, DAY(f1.day) AS gg " + 
+				"FROM flow AS f1, flow AS f2 " + 
+				"WHERE f1.river = ? AND f1.day=f2.day " + 
+				"GROUP BY DAY(f2.day), DAY(f1.day)";
+		Map<Integer, Double> mappa = new HashMap<>();
 		try {
 			Connection conn = DBConnect.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, fiume.getId());
-			st.setInt(2, giorno);
 			ResultSet res = st.executeQuery();
 
-			res.next();
-			double num = res.getDouble("avg");
+			while(res.next()) {
+				mappa.put(res.getInt("gg"), res.getDouble("avg"));
+			}
 			conn.close();
-			return num;
+			return mappa;
 			
 		} catch (SQLException e) {
 			//e.printStackTrace();

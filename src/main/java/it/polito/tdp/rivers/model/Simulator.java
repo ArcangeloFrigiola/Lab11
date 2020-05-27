@@ -1,6 +1,10 @@
 package it.polito.tdp.rivers.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 import it.polito.tdp.rivers.db.RiversDAO;
@@ -15,6 +19,7 @@ public class Simulator {
 	private double flussoOutMin;
 	private RiversDAO dao;
 	private PriorityQueue<Event> queue;
+	private Map<Integer, Double> mappaFlussoMedioByDay= new HashMap<>();
 	
 	//PARAMETRI DA CALCOLARE
 	private int giorniNotErogMinima;
@@ -25,6 +30,7 @@ public class Simulator {
 		
 		this.dao = new RiversDAO();
 		this.queue = new PriorityQueue<>();
+		this.mappaFlussoMedioByDay = dao.getAvgFlowByDay(fiume);
 		
 		this.giorniNotErogMinima=0;
 		this.capacitaMedia=0.0;
@@ -39,7 +45,7 @@ public class Simulator {
 		
 		while(countGiorni<366){
 		
-			Event nuovo = new Event(EventType.INGRESSO_FLUSSO, dao.getAvgFlowByDay(fiume, giorno.getDayOfMonth())*3600*24, countGiorni);
+			Event nuovo = new Event(EventType.INGRESSO_FLUSSO, this.mappaFlussoMedioByDay.get(giorno.getDayOfMonth())*3600*24, countGiorni);
 			queue.add(nuovo);
 			countGiorni++;
 			giorno = giorno.plusDays(1);

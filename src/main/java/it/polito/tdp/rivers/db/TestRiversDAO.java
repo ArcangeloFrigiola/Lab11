@@ -25,10 +25,9 @@ public class TestRiversDAO {
 				"\nPortata media (SQL): "+dao.getAvgFlow(fiume)+
 				"\nPortata media (Java): "+num/list.size());
 		
-		System.out.println("\nPortata media per il fiume \""+dao.getAllRivers().get(4).getName()+
+		/*System.out.println("\nPortata media per il fiume \""+dao.getAllRivers().get(4).getName()+
 				"\" nel giorno "+gg+": "+dao.getAvgFlowByDay(fiume, gg));
-		
-
+		System.out.println(dao.getAvgFlowByDay(fiume, gg));*/
 		
 	}
 
