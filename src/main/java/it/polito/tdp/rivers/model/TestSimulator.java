@@ -8,9 +8,12 @@ public class TestSimulator {
 		
 		Simulator sim = new Simulator();
 		RiversDAO dao = new RiversDAO();
-		River fiume = dao.getAllRivers().get(3);
+		River fiume = dao.getAllRivers().get(0);
 		
-		sim.run(fiume, 5, dao.getAvgFlow(fiume));
+		sim.run(fiume, 1.9, dao.getAvgFlow(fiume));
+		
+		System.out.println("\n\nCapacità media del bacino: "+sim.getCapacitaMedia()+
+				"\nGiorni in cui non è stato possibile erogare la quantità minima di flusso: "+sim.getGiorniNotErogazioneMin());
 	}
 
 }

@@ -4,9 +4,9 @@ public class Event implements Comparable<Event>{
 	
 	public enum EventType{
 		INGRESSO_FLUSSO,
-		USCITA_FLUSSO,
-		ECCESSO_FLUSSO_INGRESSO,
-		DIFETTO_FLUSSO_USCITA
+		USCITA_FLUSSO
+		/*USCITA_FLUSSO_PER_ECCESSO,
+		USCITA_FLUSSO_NOT_MIN*/
 	}
 	
 	private EventType tipoEvento;

@@ -60,21 +60,23 @@ public class FXMLController {
     @FXML
     void btnSimula(ActionEvent event) {
     	
-    	int num;
+    	double num;
     	this.txtResult.clear();
     	
     	try {
     		
-    		num = Integer.parseInt(this.txtK.getText());
-    		if(num<1) {
-    			this.txtResult.appendText("Il valore inserito deve essere un numero intero maggiore di 0");
+    		num = Double.parseDouble(this.txtK.getText());
+    		if(num<0) {
+    			this.txtResult.appendText("Il valore inserito deve essere un numero maggiore di 0");
     			return;
     		}
     		
     	}catch(NumberFormatException e) {
-    		this.txtResult.appendText("Il valore inserito non è un numero intero!");
+    		this.txtResult.appendText("Il valore inserito non è un numero!");
     		return;
     	}
+    	
+    	this.txtResult.appendText(this.model.getStatisticheSimulazione(this.boxRiver.getValue(), num));
     }
     
     @FXML
@@ -92,8 +94,6 @@ public class FXMLController {
     		double avg = Math.ceil(this.model.getAvgFlow(this.boxRiver.getValue()));
     		this.txtFMed.appendText(""+avg);
     		this.txtNumMeasurements.appendText(""+list.size());
-    	}else {
-    		this.txtResult.appendText("Nope");
     	}
     }
 

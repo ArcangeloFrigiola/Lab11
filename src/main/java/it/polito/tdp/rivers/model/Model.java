@@ -22,4 +22,13 @@ public class Model {
 	public double getAvgFlow(River fiume) {
 		return this.dao.getAvgFlow(fiume);
 	}
+	
+	public String getStatisticheSimulazione(River river, double k) {
+		
+		Simulator sim = new Simulator();
+		sim.run(river, k, getAvgFlow(river));
+		String stat = "Capacità media del bacino: "+sim.getCapacitaMedia()+
+			"\nGiorni in cui non è stato possibile erogare la quantità minima di flusso: "+sim.getGiorniNotErogazioneMin()+"\n";
+		return stat;
+	}
 }
